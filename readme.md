@@ -1,4 +1,15 @@
-AntiSquat features:
+# AntiSquat
+
+```
+⠀⠀⠀⠀⠀⢀⣠⡤⢶⣾⠟⢻⡟⠻⣷⡶⢤⣄⡀⠀⠀⠀⠀⠀
+⠀⠀⠀⣠⡶⠋⠁⢠⡟⠁⠀⢸⡇⠀⠈⢻⡄⠈⠙⢶⣄⠀⠀⠀
+⠀⢀⡾⠛⠶⢦⣤⣟⣀⣀⣀⣸⣇⣀⣀⣀⣻⣤⡴⠶⠛⢷⡀⠀
+⢠⡿⠀⠀⠀⠀⣾⠃⠉⠉⠉⢹⡏⠉⠉⠉⠘⣷⠀⠀⠀⠀⢿⡄
+⣾⠃⠀⠀⠀⠀⣿⠀⠀⠀⠀⢸⡇⠀⠀⠀⠀⣿⠀⠀⠀⠀⠘⣷
+⠿⠶⠶⠶⠶⠾⠿⠶⠶⠶⠶⠾⠷⠶⠶⠶⠶⠿⠷⠶⠶⠶⠶⠿
+    A N T I  S Q U A T
+by Owais Shaikh (@4f77616973) and Umair Nehri (@umair9747)
+```
 
 AntiSquat leverages AI techniques such as natural language processing (NLP), large language models (ChatGPT) and more to empower detection of typosquatting and phishing domains.
 
@@ -21,5 +32,7 @@ Create a file named "domains.txt", then type in `flipkart.com`. Then run `python
 AntiSquat generates several permutations of the domain, iterates through them one-by-one and tries extracting all contact information from the page.
 
 Test case:
+
+![AntiSquat running on Amazon.com](demo.png)
 
 A test case for amazon.com is attached. To run it without any api keys, simply run `python3.8 test.py`
