@@ -1,0 +1,19 @@
+[
+    {
+        "target": "http://amaz\u1d0fn.com",
+        "redirect_chain": [
+            "http://amaz\u1d0fn.com",
+            "http://xn--amazn-p29a.com/"
+        ],
+        "redirects_to_target": false,
+        "emails": [],
+        "phone_numbers": [],
+        "urls": [
+            "https://blog.to.com/phishen-mit-einem-apfel-als-koeder/",
+            "https://blog.to.com/phishing-with-an-apple-as-bait/"
+        ],
+        "available_whois": false,
+        "available_godaddy": null,
+        "available_privately": false
+    }
+]

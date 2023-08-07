@@ -1,0 +1,16 @@
+beautifulsoup4==4.8.2
+beautifulsoup4==4.10.0
+nltk==3.8.1
+numpy==1.22.3
+openai==0.27.8
+opencv_python==4.5.5.64
+publicsuffix2==2.20191221
+pytesseract==0.3.9
+Requests==2.31.0
+selenium==4.11.2
+webdriver_manager==3.8.5
+whois==0.9.27
+sentence-transformers
+python-whois
+pytesseract
+nltk
