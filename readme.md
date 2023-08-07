@@ -33,6 +33,8 @@ AntiSquat generates several permutations of the domain, iterates through them on
 
 Test case:
 
+A test case for amazon.com is attached. To run it without any api keys, simply run `python3.8 test.py`
+
 ![AntiSquat running on Amazon.com](demo.png)
 
-A test case for amazon.com is attached. To run it without any api keys, simply run `python3.8 test.py`
+Here, the tool appears to have captured a test phishing site for amazon.com. Similar domains that may be available for sale can be captured in this way and any contact information from the site may be extracted.
