@@ -1,15 +1,6 @@
 # AntiSquat
 
-```
-⠀⠀⠀⠀⠀⢀⣠⡤⢶⣾⠟⢻⡟⠻⣷⡶⢤⣄⡀⠀⠀⠀⠀⠀
-⠀⠀⠀⣠⡶⠋⠁⢠⡟⠁⠀⢸⡇⠀⠈⢻⡄⠈⠙⢶⣄⠀⠀⠀
-⠀⢀⡾⠛⠶⢦⣤⣟⣀⣀⣀⣸⣇⣀⣀⣀⣻⣤⡴⠶⠛⢷⡀⠀
-⢠⡿⠀⠀⠀⠀⣾⠃⠉⠉⠉⢹⡏⠉⠉⠉⠘⣷⠀⠀⠀⠀⢿⡄
-⣾⠃⠀⠀⠀⠀⣿⠀⠀⠀⠀⢸⡇⠀⠀⠀⠀⣿⠀⠀⠀⠀⠘⣷
-⠿⠶⠶⠶⠶⠾⠿⠶⠶⠶⠶⠾⠷⠶⠶⠶⠶⠿⠷⠶⠶⠶⠶⠿
-    A N T I  S Q U A T
-by Owais Shaikh (@4f77616973) and Umair Nehri (@umair9747)
-```
+<img src="./antisquat.png">
 
 AntiSquat leverages AI techniques such as natural language processing (NLP), large language models (ChatGPT) and more to empower detection of typosquatting and phishing domains.
 
