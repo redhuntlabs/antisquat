@@ -39,6 +39,8 @@ A test case for amazon.com is attached. To run it without any api keys, simply r
 
 Here, the tool appears to have captured a test phishing site for amazon.com. Similar domains that may be available for sale can be captured in this way and any contact information from the site may be extracted.
 
+If you'd like to know more about the tool, make sure to check out our <a href="https://redhuntlabs.com/blog/introducing-bucketloot-an-automated-cloud-bucket-inspector/">blog</a>.
+
 Acknowledgements
 <ul type="disc">
 <li><a href="https://www.blackhat.com/us-23/arsenal/schedule/#bucketloot---an-automated-s-bucket-inspector-33536">Black Hat USA 2023 [Arsenal]</a></li>
