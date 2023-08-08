@@ -34,7 +34,7 @@ If you'd like to know more about the tool, make sure to check out our <a href="h
 
 Acknowledgements
 <ul type="disc">
-<li><a href="https://www.blackhat.com/us-23/arsenal/schedule/#bucketloot---an-automated-s-bucket-inspector-33536">Black Hat USA 2023 [Arsenal]</a></li>
+<li><a href="https://www.blackhat.com/us-23/arsenal/schedule/index.html#antisquat---an-ai-powered-phishing-domain-finder-33636">Black Hat USA 2023 [Arsenal]</a></li>
 </ul>
 
 *[`To know more about our Attack Surface Management platform, check out NVADR.`](https://redhuntlabs.com/nvadr)*
