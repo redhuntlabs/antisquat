@@ -13,50 +13,43 @@ def grab_openai_key():
         return key
 
     except:
-        print("OpenAI key not found. Please paste a valid OpenAI key in a file named '{}'".format(openai_key_file_name))
-        exit(-1)
-
-
-def ask_chatgpt(query):
-    api_key = grab_openai_key()
+        raise Exception("OpenAI key not found. Please paste a valid OpenAI key in a file named '{}'".format(openai_key_file_name))
     
-    openai.api_key = api_key
-    response = openai.Completion.create (
-        model="text-davinci-003",
-        prompt=query,
-        temperature=0.5,
-        max_tokens=2500,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0,
-        stop=None,
-    )
 
-    return response
+def ask_chatgpt(system_prompt, user_query):
+    prompts = [{"role": "system", "content": system_prompt}]
+    
+    prompts.append ({"role": "user", "content": user_query})
+    
+    chat = openai.ChatCompletion.create ( 
+        #model="gpt-4-0125-preview",
+        model="gpt-3.5-turbo-0125",
+        messages=prompts 
+    ) 
+    
+    reply = chat.choices[0].message.content 
+    prompts.append (
+        {
+            "role": "assistant", 
+            "content": reply
+        }
+    ) 
+    return reply
 
-def prepare_output(chatgpt_response):
-    return chatgpt_response["choices"][0]["text"]
+openai.api_key = grab_openai_key()
 
-def simulate_typos(domain_name_only, size):
-    if size < 3: size = 3 # ChatGPT fails if the value is less than 3
-    prompt = """You are a near-sighted old-aged laptop user. You want to type  the word "{domain}". What are at least {size} potential ways you could misspell it? Put them all in a JSON Array.""".format(domain=domain_name_only, size=size)
-    results = json.loads(prepare_output(ask_chatgpt(prompt)))
-    return results
+##############
+#Prompts
 
-def generate_homoglyphs(domain_name_only, size):
-    if size < 3: size = 3 # ChatGPT fails if the value is less than 3
-    prompt = """Generate {size} unique and realistic homoglyphed-words that look identical to the word  "{domain}". Put them all in a JSON Array.""".format(domain=domain_name_only, size=size)
-    results = json.loads(prepare_output(ask_chatgpt(prompt)))
-    return results
+class SystemPrompts:
+    misspelled_domains = """You are a pentester's assistant. Your job is to help pentesters generate misspelled domain names from a given domain. For example, amazon.com can be misspelled in ways such as: "amazn.com", "amazzon.com", "amazoon.com", "amazonn.com", "aamzon.com", "amazo.com", "amaazon.com", "amazona.com", "amazno.com", "amazonnn.com", "amazn.com", "amaozn.com", "amazone.com", "amazoon.com", "amazom.com" and so on.
 
-def popular_typos(domain_name_only, size):
-    if size < 3: size = 3 # ChatGPT fails if the value is less than 3
-    prompt = """What are the most common misspellings of "{domain}" that you have found on the internet so far?  Give me at least {size}. Put them all in a JSON Array.""".format(domain=domain_name_only, size=size)
-    results = json.loads(prepare_output(ask_chatgpt(prompt)))
-    return results
+# Constraints
+1. Give as many misspelled domains as you can.
+2. Attempt to mimic the misspelling as if it was mistyped by a human.
+3. Always put the TLD in output. Make sure it is a valid TLD.
+4. Restrict your output in JSON format such as {"<user input>":["<array of generated domains>"]}"""
 
-def popular_tlds(size):
-    if size < 3: size = 3 # ChatGPT fails if the value is less than 3
-    prompt = """What are the {size} most popular TLDs and ccTLDs you have come across on hosting sites? Put them all in a JSON Array.""".format(size=size)
-    results = json.loads(prepare_output(ask_chatgpt(prompt)))
-    return results
+system_prompts = SystemPrompts()
+
+test = json.loads(ask_chatgpt(system_prompts.misspelled_domains, "zomato.com"))
