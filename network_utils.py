@@ -1,4 +1,4 @@
-import argparse, json, os, whois, requests, re, publicsuffix2, ssl, socket
+import argparse, json, os, whois, requests, re, publicsuffix2, ssl, socket, datetime
 from urllib.parse import urlparse
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
@@ -63,16 +63,19 @@ def is_buyable_whois(domain):
     except Exception:
         return True
 
-def is_buyable_privately (page_source):
+def is_buyable_privately (input_domain, url, page_source):
     sale_sentence = [
         "This domain is for sale",
         "Interested in purchasing this domain",
         "Domain available",
-        "This domain may be for sale",
+        "may be for sale",
         "This domain is for sale",
+        "inquire about this domain",
         "Secure this domain",
         "Make an offer"
     ]
+    
+    if "domain" in url and "domain" not in input_domain: return True 
     
     for sentence in sale_sentence:
         if sentence.lower() in page_source.lower(): return True 
@@ -90,12 +93,27 @@ import whois
 
 def get_domain_registrant(domain):
     try:
-        # Fetch the WHOIS information for the domain
         domain_info = whois.whois(domain)
+        
+        updated_date = ""
+        try:
+            if len(domain_info.updated_date) > 1: updated_date = str(domain_info.updated_date[0])
+            else: updated_date = str(domain_info.updated_date)
+        except: updated_date = str(domain_info.updated_date)
+        
+        creation_date = ""
+        try:
+            if len(domain_info.creation_date) > 1: creation_date = str(domain_info.creation_date[0])
+            else: creation_date = str(domain_info.creation_date)
+        except: creation_date = str(domain_info.creation_date)
+            
         return {
             "organization": domain_info.organization, 
-            "registrar": domain_info.registrar    
+            "registrar": domain_info.registrar,
+            "created": creation_date,
+            "updated": updated_date
         }
+        
     except Exception as e:
         #print (f"Error fetching WHOIS information: {e}")
         return {}

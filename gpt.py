@@ -1,27 +1,18 @@
-import argparse, openai, json, publicsuffix2, time
-
-openai_key_file_name = ".openai-key"
-
-def grab_openai_key():
-    try:
-        key_file = open(openai_key_file_name, "r")
-        key = key_file.read().strip().replace("\n","").replace("\t","").replace("\r","")
-        key_file.close()
-        if len(key) < 51: 
-            raise Exception()
-        
-        return key
-
-    except:
-        raise Exception("OpenAI key not found. Please paste a valid OpenAI key in a file named '{}'".format(openai_key_file_name))
-    
+import argparse, json, publicsuffix2, time, os
+from openai import OpenAI
 
 def ask_chatgpt(system_prompt, user_query):
+    
+    
+    client = OpenAI(
+        api_key=os.environ.get("OPENAI_API_KEY"),
+    )
+    
     prompts = [{"role": "system", "content": system_prompt}]
     
     prompts.append ({"role": "user", "content": user_query})
     
-    chat = openai.ChatCompletion.create ( 
+    chat = client.chat.completions.create ( 
         #model="gpt-4-0125-preview",
         model="gpt-3.5-turbo",
         messages=prompts 
@@ -38,8 +29,6 @@ def ask_chatgpt(system_prompt, user_query):
     if "```json" in reply: reply = reply.replace("```json", "").replace("```", "")
     
     return reply
-
-openai.api_key = grab_openai_key()
 
 ##############
 #Prompts
@@ -76,11 +65,13 @@ def all_prompts (domain):
     domains = []
     misspelled_domains = ask_chatgpt(system_prompts.misspelled_domains, domain)
     domains += json.loads(misspelled_domains)
+    print (f"Generated {len(json.loads(misspelled_domains))} misspelled domains")
     print ("Sleeping for 20s to prevent rate limiting")
     time.sleep(20)
     
     combosquat = ask_chatgpt(system_prompts.combosquat, domain)
     domains += json.loads(combosquat)
+    print (f"Generated {len(json.loads(combosquat))} combination domains")
     print ("Sleeping for 20s to prevent rate limiting")
     time.sleep(20)
     
@@ -89,7 +80,7 @@ def all_prompts (domain):
     
     tld_squatting = ask_chatgpt(system_prompts.tld_squatting, domain)
     domains += json.loads(tld_squatting)
+    print (f"Generated {len(json.loads(tld_squatting))} combination domains")
 
     return domains
 
-print(all_prompts("flipkart.com"))

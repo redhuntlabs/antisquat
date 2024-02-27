@@ -174,4 +174,7 @@ def text_from_html(body):
     visible_texts = filter(tag_visible, texts)  
     return u" ".join(t.strip() for t in visible_texts)
 
-
+def extract_emails(body):
+    email_regex = r'''([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)'''
+    emails = list(set(re.findall (email_regex, body)))
+    return emails

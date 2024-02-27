@@ -1,2 +1,6 @@
-for subdomain squatting:
-- 
+- check redirect chain urls (if they have url shorteners etc.)
+    - check if redirect chain domain is owned by same org as input domain
+- check if destination is not same as input domain or first domain
+- check org owning domain
+- check status code
+- check if email present in source code matches root domain
