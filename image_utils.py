@@ -1,40 +1,30 @@
-import cv2, numpy, pytesseract
-import text_utils
+from PIL import Image
+import imagehash
 
-image_text_original       = ""
-image_text_grayscaled     = ""
-image_text_monochromed    = ""
-image_text_mean_threshold = ""
+def are_images_similar(img_path1, img_path2, hash_size=3, cutoff=5):
+    """Compare two images for similarity using image hashing.
+    
+    Args:
+        img_path1 (str): Path to the first image.
+        img_path2 (str): Path to the second image.
+        hash_size (int): Hash size, higher value for more granularity.
+        cutoff (int): Maximum Hamming distance (difference in hash bits).
+                      Images will be considered similar if their difference is less or equal to this value.
+    
+    Returns:
+        bool: True if images are similar, False otherwise.
+    """
+    # Load images
+    image1 = Image.open(img_path1)
+    image2 = Image.open(img_path2)
 
-def scan_image(image):
-    image = numpy.array(image) # converts the image to a compatible format
+    # Generate hashes
+    hash1 = imagehash.average_hash(image1, hash_size)
+    hash2 = imagehash.average_hash(image2, hash_size)
 
-    # 0. Original 
-    try:
-        image_text_original = pytesseract.image_to_string(image, config = "--psm 12")
-        return image_text_original
-    except TypeError:
-        print("Cannot open this file type.")
+    # Compare hashes
+    if hash1 - hash2 <= cutoff:
+        return True
+    else:
+        return False
 
-def simplify_image(image):
-    image = numpy.array(image) # converts the image to a compatible format
-
-    # 1. Grayscale
-    try: 
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    except: 
-        print ("Couldn't grayscale image")
-
-    # 2. Monochrome
-    try: 
-        image = cv2.threshold(image, 100, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
-    except: 
-        print ("Couldn't monochrome image")
-
-    # 3. Mean threshold
-    try:
-        image = cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 2)
-    except: 
-        print ("Couldn't mean threshold image")
-
-    return image

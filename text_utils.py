@@ -1,4 +1,7 @@
-import nltk, re, publicsuffix2
+import nltk, re, publicsuffix2, requests
+from bs4 import BeautifulSoup
+from bs4.element import Comment
+import urllib.request
 
 def between(s, start, end):
     return s.split(start)[1].split(end)[0]
@@ -151,8 +154,24 @@ def similar_word(string, substring):
     
     return False
 
-
-
-
+def get_urls(input_url, text):
+    soup = BeautifulSoup(text, 'html.parser')
+    links = soup.find_all('a')
+    urls = [link.get('href') for link in links if link.get('href') is not None]
+    urls = [f"{input_url}{url}" if url.startswith('/') else url for url in urls]
+    return urls
+   
+def tag_visible(element):
+    if element.parent.name in ['style', 'script', 'head', 'title', 'meta', '[document]']:
+        return False
+    if isinstance(element, Comment):
+        return False
+    return True
+    
+def text_from_html(body):
+    soup = BeautifulSoup(body, 'html.parser')
+    texts = soup.findAll(text=True)
+    visible_texts = filter(tag_visible, texts)  
+    return u" ".join(t.strip() for t in visible_texts)
 
 

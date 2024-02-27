@@ -1,5 +1,5 @@
 import argparse, cv2, publicsuffix2, shutil, json, selenium, traceback
-import web_utils, image_utils, text_utils, gpt, domain_utils, file_utils, metadata_utils
+import web_utils, image_utils, text_utils, gpt, network_utils, file_utils, metadata_utils
 
 metadata_file_name = "metadata_results.json"
 
@@ -63,7 +63,7 @@ blacklist = get_blacklist()
 shutil.rmtree(web_utils.temp_dir_name, ignore_errors=True)
 
 godaddy = False
-if domain_utils.grab_godaddy_key(): godaddy = True
+if network_utils.grab_godaddy_key(): godaddy = True
 
 for domain in domain_list:
 
@@ -73,7 +73,7 @@ for domain in domain_list:
     homograph_results = []
 
     try:
-        domain = domain_utils.get_domain_from_url(domain) # extract domain only if any
+        domain = network_utils.get_domain_from_url(domain) # extract domain only if any
         domain_without_tld = domain.replace(publicsuffix2.get_tld(domain),'').replace('.','')
 
         print("[>] Running antisquat on: " + domain)
@@ -117,9 +117,9 @@ for domain in domain_list:
         visual_typos = gpt.simulate_typos(domain_name_only=domain_without_tld, size=chatgpt_requests)
         popular_tlds = gpt.popular_tlds(size=chatgpt_requests)
 
-        homoglyphed_domains = domain_utils.merge_lists (homoglyphed_words, popular_tlds)
-        common_typos = domain_utils.merge_lists (common_typos, popular_tlds)
-        visual_typos = domain_utils.merge_lists (visual_typos, popular_tlds)
+        homoglyphed_domains = network_utils.merge_lists (homoglyphed_words, popular_tlds)
+        common_typos = network_utils.merge_lists (common_typos, popular_tlds)
+        visual_typos = network_utils.merge_lists (visual_typos, popular_tlds)
 
         results = homograph_results + misspelled_results + ribbon_word_results + phishtank_results
 

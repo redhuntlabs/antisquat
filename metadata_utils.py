@@ -1,5 +1,5 @@
 import json, re, bs4
-import domain_utils, web_utils, publicsuffix2
+import network_utils, web_utils, publicsuffix2
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
@@ -51,13 +51,13 @@ def get_page_metadata(url):
     urls = web_utils.get_links(source)
 
     # 5. Purchasable?
-    whois = domain_utils.is_buyable_whois(url)
-    godaddy = domain_utils.is_buyable_godaddy(url)
-    private = domain_utils.is_buyable_privately(page_text)
+    whois = network_utils.is_buyable_whois(url)
+    godaddy = network_utils.is_buyable_godaddy(url)
+    private = network_utils.is_buyable_privately(page_text)
 
     redirects_to_target = False
     try:
-        if domain_utils.get_domain_from_url(url) in domain_utils.get_domain_from_url(redirect_chain[-1]): redirects_to_target = True
+        if network_utils.get_domain_from_url(url) in network_utils.get_domain_from_url(redirect_chain[-1]): redirects_to_target = True
     except: pass
 
     results = {

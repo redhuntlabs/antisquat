@@ -1,12 +1,13 @@
 beautifulsoup4
-beautifulsoup4
+lxml
 nltk
 numpy
 openai
 opencv_python
+pytimeparse
 publicsuffix2
 pytesseract
-Requests
+requests
 selenium
 webdriver_manager
 whois
@@ -14,3 +15,6 @@ sentence-transformers
 python-whois
 pytesseract
 nltk
+Pillow 
+imagehash
+python-nmap
