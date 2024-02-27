@@ -106,7 +106,6 @@ def requester(input_domain: str, urls: list) -> list:
                 # 5. Purchasability
                 result["purchasable"]["privately"] = network_utils.is_buyable_privately(input_domain, get_response.redirect_chain[-1],response.text)
                 
-                score = 0
                 score = metric.compute_squatability_score (
                     input_domain = input_domain,
                     emails=result["emails"],
